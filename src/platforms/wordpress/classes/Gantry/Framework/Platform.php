@@ -237,6 +237,25 @@ class Platform extends BasePlatform
         return apply_filters( 'gantry5_form_field_selectize_categories', $new_categories );
     }
 
+    // getPostTypes logic for the post_type selectize field
+    public function getPostTypes( $args = [] )
+    {
+        $default = [
+            'public'                   => true,
+        ];
+
+        $args = wp_parse_args( apply_filters( 'gantry5_form_field_selectize_post_type_args', $args ), $default );
+
+        $post_types =  get_post_types( $args, 'objects' );
+
+        $new_post_types = [];
+
+        foreach( $post_types as $pt ) {
+            $new_post_types[$pt->name] = $pt->label;
+        }
+        return apply_filters( 'gantry5_form_field_selectize_post_types', $new_post_types );
+    }
+
     public function displayWidgets($key, array $params = [])
     {
         return Widgets::displayPosition($key, $params);

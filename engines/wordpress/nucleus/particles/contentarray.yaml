@@ -24,6 +24,12 @@ form:
               description: Select the categories the posts should be taken from.
               overridable: false
 
+            post.filter.post_type:
+              type: wordpress.post_types
+              label: Post types
+              description: Select the post type the posts should be taken from.
+              overridable: false
+
             post.filter.posts:
               type: input.text
               label: Posts

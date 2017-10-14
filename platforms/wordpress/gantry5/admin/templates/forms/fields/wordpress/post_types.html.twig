@@ -1,0 +1,21 @@
+{% extends "forms/fields/input/selectize.html.twig" %}
+
+{% block global_attributes %}
+    {% set public = field.public|default('true') %}
+    {% set query_parameters = {
+        'public': public,
+	} %}
+    {% set post_types = gantry.platform.getPostTypes(query_parameters) %}
+    {% set Options = field.selectize.Options %}
+    {% set options = [] %}
+    {% if post_types %}
+        {% for id,post_type in post_types %}
+            {% set options = options|merge([{value: id, text: post_type}])  %}
+        {% endfor %}
+
+        {% set field = field|merge(field.selectize.Options|default({}))|merge({selectize: { Options: options }}) %}
+    {% endif %}
+
+    data-selectize="{{ (field.selectize is defined ? field.selectize|json_encode()|e('html_attr') : '') }}"
+    {{ parent() }}
+{% endblock %}
